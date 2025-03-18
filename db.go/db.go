@@ -29,6 +29,7 @@ func NewStudentHandler(db *gorm.DB) *StudentHandler {
 func (s *StudentHandler) AddStudent(student schemas.Student) error {
 	if result := s.DB.Create(&student); result.Error != nil {
 		log.Error().Msg("Failed to create student")
+		return result.Error
 	}
 
 	log.Info().Msg("Create student!")
@@ -39,6 +40,12 @@ func (s *StudentHandler) GetStudents() ([]schemas.Student, error) {
 	students := []schemas.Student{}
 	err := s.DB.Find(&students).Error
 	return students, err
+}
+
+func (s *StudentHandler) GetFilteredStudent(active bool) ([]schemas.Student, error) {
+	filteredStudents := []schemas.Student{}
+	err := s.DB.Where("active = ?", active).Find(&filteredStudents)
+	return filteredStudents, err.Error
 }
 
 func (s *StudentHandler) GetStudent(id int) (schemas.Student, error) {
