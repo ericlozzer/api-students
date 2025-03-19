@@ -3,9 +3,11 @@ package api
 import (
 	"github.com/ericlozzer/api-students/db.go"
 
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
+
+	_ "github.com/ericlozzer/api-students/docs"
 )
 
 type API struct {
